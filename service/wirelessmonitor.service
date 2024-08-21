@@ -1,0 +1,13 @@
+[Unit]
+Description=Wireless Monitor Service
+After=network.target
+
+[Service]
+ExecStart=/usr/local/bin/wirelessmonitor.sh
+Restart=always
+User=pi
+WorkingDirectory=/home/pi
+Environment=DISPLAY=:0
+
+[Install]
+WantedBy=multi-user.target
