@@ -1,29 +1,55 @@
-# Wireless Monitor
+## Wireless Monitor
 
-This project provides a script and service to monitor your Raspberry Pi's desktop, stream it, and cast it to a Chromecast.
+Wireless Monitor is a script designed to stream the Raspberry Pi desktop to a Chromecast. It also supports streaming to other devices via HTTP.
 
-## Features
+### Prerequisites
 
-- Streams desktop activity to a Chromecast
-- Automatically starts on boot with systemd
-- Simple setup and configuration
+The following dependencies are required:
+- `VLC`
+- `FFmpeg`
+- `Python3`
 
-## Installation
+### Installation
 
-1. Copy the `wirelessmonitor.sh` script to `/usr/local/bin/`.
-2. Copy the `wirelessmonitor.service` file to `/etc/systemd/system/`.
-3. Reload systemd with `sudo systemctl daemon-reload`.
-4. Enable the service with `sudo systemctl enable wirelessmonitor`.
-5. Start the service with `sudo systemctl start wirelessmonitor`.
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/kubbur/wirelessmonitor.git
+   cd wirelessmonitor
+   ```
 
-## Usage
+2. Run the setup script:
+   ```bash
+   sudo ./install.sh
+   ```
+   The script will:
+   - Install necessary dependencies.
+   - Set up the `wirelessmonitor.sh` script and service.
+   - Configure the system to run the service automatically at startup.
 
-The service will automatically start on boot. To manually control the service:
+### Configuration
 
-- Start: `sudo systemctl start wirelessmonitor`
-- Stop: `sudo systemctl stop wirelessmonitor`
-- Restart: `sudo systemctl restart wirelessmonitor`
+Before running the script, update the `CHROMECAST_IP` variable in the `wirelessmonitor.sh` script:
+```bash
+CHROMECAST_IP="your_chromecast_ip_here"
+```
 
-## License
+### Managing the Service
 
-[Your preferred license]
+To manage the service, use the following commands:
+- **Start the service:** `sudo systemctl start wirelessmonitor`
+- **Stop the service:** `sudo systemctl stop wirelessmonitor`
+- **Restart the service:** `sudo systemctl restart wirelessmonitor`
+- **Enable the service at startup:** `sudo systemctl enable wirelessmonitor`
+- **Disable the service at startup:** `sudo systemctl disable wirelessmonitor`
+
+### Troubleshooting
+
+Common issues and their solutions will be documented here.
+
+### Contributing
+
+Feel free to submit issues and pull requests to help improve the project.
+
+### License
+
+This project is licensed under the MIT License.
