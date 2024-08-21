@@ -1,6 +1,6 @@
 [Unit]
 Description=Wireless Monitor Service
-After=network.target
+After=graphical.target  # This ensures X11 is fully loaded
 
 [Service]
 ExecStart=/usr/local/bin/wirelessmonitor.sh
