@@ -1,11 +1,10 @@
 #!/bin/bash
 
-# Define Chromecast IP address
-# Replace "YOUR_CHROMECAST_IP" with your actual Chromecast IP address
-CHROMECAST_IP="YOUR_CHROMECAST_IP"
+# Define the Chromecast IP
+CHROMECAST_IP="192.168.18.17"  # Replace this with the actual IP or prompt the user to set it
 
-# Get the current user's home directory
-USER_HOME=$(eval echo ~$USER)
+# Determine the IP address of the Raspberry Pi
+PI_IP=$(hostname -I | awk '{print $1}')
 
 mkdir -p /mnt/ramdisk/logs
 mkdir -p /mnt/ramdisk/stream
@@ -28,7 +27,7 @@ trap cleanup SIGINT SIGTERM
 
 # Start the HTTP server
 echo "Starting HTTP server..."
-python3 $USER_HOME/http_server.py > /mnt/ramdisk/logs/http_server.log 2>&1 &
+python3 /home/$USER/http_server.py > /mnt/ramdisk/logs/http_server.log 2>&1 &
 HTTP_SERVER_PID=$!
 echo "HTTP server started with PID $HTTP_SERVER_PID"
 
@@ -53,7 +52,7 @@ sleep 5
 start_vlc() {
     while true; do
         echo "Starting VLC..."
-        cvlc --network-caching=2000 --sout "#chromecast{ip=$CHROMECAST_IP}" http://192.168.18.10:8091/stream/stream.m3u8 > /mnt/ramdisk/logs/vlc.log 2>&1
+        cvlc --network-caching=2000 --sout "#chromecast{ip=$CHROMECAST_IP}" http://$PI_IP:8091/stream/stream.m3u8 > /mnt/ramdisk/logs/vlc.log 2>&1
         echo "VLC exited. Restarting in 10 seconds..."
         sleep 10
     done
